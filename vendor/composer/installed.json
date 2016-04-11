@@ -1,0 +1,43 @@
+[
+    {
+        "name": "zurb/foundation",
+        "version": "6.2.0",
+        "version_normalized": "6.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zurb/foundation-sites.git",
+            "reference": "d79008091c6f32ffd9bd6ea60d266c4a76771886"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zurb/foundation-sites/zipball/d79008091c6f32ffd9bd6ea60d266c4a76771886",
+            "reference": "d79008091c6f32ffd9bd6ea60d266c4a76771886",
+            "shasum": ""
+        },
+        "time": "2016-02-26 19:36:13",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "ZURB, Inc.",
+                "email": "foundation@zurb.com",
+                "homepage": "http://zurb.com"
+            }
+        ],
+        "description": "The most advanced responsive front-end framework in the world.",
+        "homepage": "http://foundation.zurb.com",
+        "keywords": [
+            "JS",
+            "css",
+            "framework",
+            "mobile-first",
+            "responsive",
+            "sass",
+            "scss"
+        ]
+    }
+]
