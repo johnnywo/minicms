@@ -25,5 +25,3 @@ catch (PDOException $e)
 
 include_once 'src/User.php';
 $user = new \Models\User($db_con);
-
-//$db = new PDO('mysql:host='.DBHOST.';dbname='.DBNAME, DBUSER, DBPASS);

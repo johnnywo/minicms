@@ -30,6 +30,10 @@ if(isset($_POST['login']))
 
 }
 
+if(isset($_GET['logged-out'])) {
+    print('<div class="callout notice">Du bist nun abgemeldet.</div>');
+}
+
 include 'partial/header.php';
 ?>
 
@@ -51,9 +55,7 @@ include 'partial/header.php';
 
                 <input type="password" class="form-control" name="upass" placeholder="Passwort" required />
 
-                <button type="submit" name="btn-login" class="button">
-                    <i class="glyphicon glyphicon-log-in"></i>&nbsp;SIGN IN
-                </button>
+                <input type="submit" name="login" value="Login" />
 
             <br />
             <label>Noch kein Benutzerkonto? <a href="sign-up.php">zur Registrierung</a></label>
@@ -61,5 +63,6 @@ include 'partial/header.php';
 
 
 <?php
+var_dump($_SESSION);
 include 'partial/footer.php';
 ?>

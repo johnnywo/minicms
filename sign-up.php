@@ -8,7 +8,7 @@
 
 require_once 'dbconfig.php';
 
-/*if($user->is_loggedin()!="");
+/*if($user->is_loggedin());
 {
     $user->redirect('home.php');
 }*/
@@ -18,7 +18,7 @@ if(isset($_POST['sign-up']))
     $uname = trim(filter_input(INPUT_POST, 'uname'));
     $umail = trim(filter_input(INPUT_POST, 'umail'));
     $upass = trim(filter_input(INPUT_POST, 'upass'));
-    $ulang = trim(filter_input(INPUT_POST, 'ulang'));
+    $ulang = filter_input(INPUT_POST, 'ulang');
     
     if($uname == '')
     {
@@ -40,6 +40,10 @@ if(isset($_POST['sign-up']))
     {
         $error[] = 'Bitte geben Sie ein Passwort mit mindestens 6 Zeichen an!';
     }
+    elseif (!isset($ulang))
+    {
+        $error[] = 'Bitte deine bevorzugte Sprache angeben.';
+    }
     else
     {
         try
@@ -57,7 +61,7 @@ if(isset($_POST['sign-up']))
                 $error[] = 'Sorry, diese E-Mail Adresse ist bereits vorhanden!';
             }
             else {
-                if ($user->register($uname, $umail, $upass))
+                if ($user->register($ulang, $uname, $umail, $upass))
                 {
                     $user->redirect('sign-up.php?joined');
                 }
@@ -91,14 +95,14 @@ include 'partial/header.php';
     {
         ?>
         <div class="callout success">
-            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully registered <a href='index.php'>login</a> here
+            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Registrierung erfolgreich! <a href='index.php'>jetzt einloggen</a>
         </div>
         <?php
     }
     ?>
         <input type="text" class="form-control" name="uname" placeholder="dein Username" value="<?php if(isset($error)){echo $uname;}?>" />
 
-        <input type="radio" name="ulang" value="<?php $user->getLanguage()?>"
+
 
 
         <input type="text" class="form-control" name="umail" placeholder="deine E-Mail Adresse" value="<?php if(isset($error)){echo $umail;}?>" />
@@ -106,7 +110,15 @@ include 'partial/header.php';
 
         <input type="password" class="form-control" name="upass" placeholder="dein Passwort" />
 
-        <input type="submit" name="sign-up" value="jetzt registrieren!" />
+    <p>Sprache:</p>
+
+    <?php
+    foreach ($user->getLanguage() as $index => $item) {
+        printf('<input type="radio" name="ulang" value="%d"> %s<br>', $item['idlanguage'], $item['language']);
+    }
+    ?>
+    <br>
+    <input type="submit" name="sign-up" value="jetzt registrieren!" />
 
     <br />
     <label>have an account ! <a href="index.php">Sign In</a></label>

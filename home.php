@@ -12,7 +12,12 @@ if(!$user->is_loggedin())
     $user->redirect('index.php');
 }
 $user_id = $_SESSION['user_session'];
-$stmt = $db_con->prepare('SELECT * FROM users WHERE user_id = :user_id');
+/*$stmt = $db_con->prepare('SELECT * FROM users WHERE user_id = :user_id');
+$stmt->execute(array(':user_id' => $user_id));
+$userRow = $stmt->fetch(PDO::FETCH_ASSOC);*/
+
+$stmt = $db_con->prepare('SELECT * FROM users LEFT JOIN language ON 
+                          users.language_idlanguage=language.idlanguage WHERE user_id = :user_id');
 $stmt->execute(array(':user_id' => $user_id));
 $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -20,16 +25,15 @@ include 'partial/header.php';
 ?>
 
 <div class="header">
-    <div class="left">
-        <label><a href="http://www.codingcage.com/">Coding Cage - Programming Blog</a></label>
-    </div>
-    <div class="right">
-        <label><a href="logout.php?logout=true"><i class="glyphicon glyphicon-log-out"></i> logout</a></label>
-    </div>
+
 </div>
 <div class="content">
-    welcome : <?php print($userRow['user_name']); ?>
+    Hallo <?php print($userRow['user_name']); ?>!<br />
+    Deine bevorzugte Sprache lautet: <b><?php print($userRow['language']) ?></b>
 </div>
+
+<label><a href="logout.php?logout=true"> logout</a></label>
+
 
 <?php
 include 'partial/footer.php';
