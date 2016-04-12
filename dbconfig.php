@@ -5,8 +5,8 @@
  * Date: 10.04.16
  * Time: 10:15
  */
-include_once 'bootstrap.php';
-//session_start();
+//include_once 'bootstrap.php';
+session_start();
 
 $db_host = 'localhost';
 $db_user = 'root';

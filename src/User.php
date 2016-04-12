@@ -23,12 +23,14 @@ class User
         try
         {
             $new_password = password_hash($upass, PASSWORD_DEFAULT);
+            $language = 1;
 
-            $stmt = $this->db->prepare('INSERT INTO users(user_name, user_email, user_pass) VALUES (:uname, :umail, :upass)');
+            $stmt = $this->db->prepare('INSERT INTO users(user_name, user_email, user_pass, language_idlanguage) VALUES (:uname, :umail, :upass, :ulang)');
 
             $stmt->bindparam(':uname', $uname);
             $stmt->bindparam(':umail', $umail);
             $stmt->bindparam(':upass', $new_password);
+            $stmt->bindparam(':ulang', $language);
             $stmt->execute();
         }
         catch (\PDOException $e)
@@ -73,7 +75,7 @@ class User
 
     public function redirect($url)
     {
-        header('Location: $url');
+        header('Location: ' . $url);
     }
 
     public function logout()
@@ -81,5 +83,27 @@ class User
         session_destroy();
         unset($_SESSION['user_session']);
         return true;
+    }
+    
+    public function getLanguage()
+    {
+        try
+        {
+            $stmt = $this->db->prepare('SELECT * FROM language');
+            $stmt->execute();
+            $langRow = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if($stmt->rowCount() > 0)
+            {
+                foreach ($langRow as $index => $item) {
+                    echo $item;
+                    //var_dump($index);
+                }
+            }
+
+        }
+        catch (\PDOException $e)
+        {
+            echo $e->getMessage();
+        }
     }
 }

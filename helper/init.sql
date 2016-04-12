@@ -1,3 +1,5 @@
+USE minicms;
+
 CREATE TABLE language
 (
     idlanguage INT(11) PRIMARY KEY NOT NULL,

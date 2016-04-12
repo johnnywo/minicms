@@ -8,7 +8,7 @@
 
 require_once 'dbconfig.php';
 
-if($user->is_loggedin()!='')
+if($user->is_loggedin() != '')
 {
     $user->redirect('home.php');
 }
@@ -56,7 +56,7 @@ include 'partial/header.php';
                 </button>
 
             <br />
-            <!--<label>Noch kein Benutzerkonto? <a href="sign-up.php">zur Registrierung</a></label>-->
+            <label>Noch kein Benutzerkonto? <a href="sign-up.php">zur Registrierung</a></label>
         </form>
 
 
