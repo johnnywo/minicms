@@ -45,7 +45,7 @@ include 'partial/header.php';
             {
                 ?>
                 <div class="callout alert">
-                    <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?> !
+                    <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
                 </div>
                 <?php
             }

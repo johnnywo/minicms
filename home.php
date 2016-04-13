@@ -12,9 +12,6 @@ if(!$user->is_loggedin())
     $user->redirect('index.php');
 }
 $user_id = $_SESSION['user_session'];
-/*$stmt = $db_con->prepare('SELECT * FROM users WHERE user_id = :user_id');
-$stmt->execute(array(':user_id' => $user_id));
-$userRow = $stmt->fetch(PDO::FETCH_ASSOC);*/
 
 $stmt = $db_con->prepare('SELECT * FROM users LEFT JOIN language ON 
                           users.language_idlanguage=language.idlanguage WHERE user_id = :user_id');
