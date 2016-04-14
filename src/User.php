@@ -11,6 +11,9 @@ namespace Models;
 
 class User
 {
+    /**
+     * @var \PDO
+     */
     private $db;
 
     function __construct($db_con)
@@ -99,7 +102,7 @@ class User
     {
         session_destroy();
         unset($_SESSION['user_session']);
-        header('Location: index.php?logged-out');
+        header('Location: login.php?logged-out');
         return true;
     }
 }

@@ -95,7 +95,7 @@ include 'partial/header.php';
     {
         ?>
         <div class="callout success">
-            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Registrierung erfolgreich! <a href='index.php'>jetzt einloggen</a>
+            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Registrierung erfolgreich! <a href='login.php'>jetzt einloggen</a>
         </div>
         <?php
     }
@@ -121,7 +121,7 @@ include 'partial/header.php';
     <input type="submit" name="sign-up" value="jetzt registrieren!" />
 
     <br />
-    <label>have an account ! <a href="index.php">Sign In</a></label>
+    <label>have an account ! <a href="login.php">Sign In</a></label>
 </form>
 
 <?php

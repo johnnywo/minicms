@@ -16,5 +16,6 @@
     <title>Foundation for Sites</title>
     <link rel="stylesheet" href="vendor/zurb/foundation/dist/foundation.css">
     <!--<link rel="stylesheet" href="css/app.css">-->
+    <script src="vendor/ckeditor/ckeditor/ckeditor.js"></script>
 </head>
 <body>

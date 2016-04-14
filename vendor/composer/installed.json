@@ -39,5 +39,48 @@
             "sass",
             "scss"
         ]
+    },
+    {
+        "name": "ckeditor/ckeditor",
+        "version": "4.5.8",
+        "version_normalized": "4.5.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ckeditor/ckeditor-releases.git",
+            "reference": "6345bc8f142bb72ffb83b4a964be4d88ad3905c8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/6345bc8f142bb72ffb83b4a964be4d88ad3905c8",
+            "reference": "6345bc8f142bb72ffb83b4a964be4d88ad3905c8",
+            "shasum": ""
+        },
+        "time": "2016-03-31 16:23:17",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+",
+            "LGPL-2.1+",
+            "MPL-1.1+"
+        ],
+        "authors": [
+            {
+                "name": "CKSource",
+                "homepage": "http://cksource.com"
+            }
+        ],
+        "description": "JavaScript WYSIWYG web text editor.",
+        "homepage": "http://ckeditor.com",
+        "keywords": [
+            "CKEditor",
+            "editor",
+            "fckeditor",
+            "html",
+            "javascript",
+            "richtext",
+            "text",
+            "wysiwyg"
+        ]
     }
 ]

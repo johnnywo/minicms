@@ -10,6 +10,11 @@
     }
   ],
   "require": {
-    "zurb/foundation": "6.2.0"
+    "zurb/foundation": "6.2.0",
+    "ckeditor/ckeditor": "4.5.8"
+  },
+  "autoload": {
+    "psr-4": {"Models\\": "src/"}
   }
 }
+

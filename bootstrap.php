@@ -9,37 +9,10 @@ session_start();
 
 require_once(__DIR__ . '/config.php');
 
+require_once(__DIR__ . '/vendor/autoload.php');
+
 locale_set_default('de-AT.utf8');
 date_default_timezone_set('Europe/Berlin');
-
-spl_autoload_register(function ($class) {
-
-    // project-specific namespace prefix
-    $prefix = 'src\\';
-
-    // base directory for the namespace prefix
-    $base_dir = 'src';
-
-    // does the class use the namespace prefix?
-    $len = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0) {
-        // no, move to the next registered autoloader
-        return;
-    }
-
-    // get the relative class name
-    $relative_class = substr($class, $len);
-
-    // replace the namespace prefix with the base directory, replace namespace
-    // separators with directory separators in the relative class name, append
-    // with .php
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-
-    // if the file exists, require it
-    if (file_exists($file)) {
-        require $file;
-    }
-});
 
 set_error_handler(function ($errNum, $errStr)
 {
