@@ -49,7 +49,7 @@ include 'partial/header.php';
                 // instance, using default configuration.
                 CKEDITOR.replace( 'htmltext' );
             </script>
-        <input type="submit" name="submit" value="Inhalt erstellen">
+        <br><input class="button" type="submit" name="submit" value="Inhalt erstellen">
     </form>
 </div>
 

@@ -118,10 +118,10 @@ include 'partial/header.php';
     }
     ?>
     <br>
-    <input type="submit" name="sign-up" value="jetzt registrieren!" />
+    <input class="button" type="submit" name="sign-up" value="jetzt registrieren!" />
 
     <br />
-    <label>have an account ! <a href="login.php">Sign In</a></label>
+    <label>Hast du bereits einen Account? <a href="login.php">einloggen</a></label>
 </form>
 
 <?php
