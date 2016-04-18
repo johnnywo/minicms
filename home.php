@@ -34,11 +34,9 @@ include 'partial/header.php';
 
 <div class="row">
     <form method="post" action="controller/contentController.php">
-        <label for="pagename">Name der Seite: </label> <input type="text" name="pagename">
-        <label for="pagetitle">Titel der Seite: </label> <input type="text" name="pagetitle">
-        <label for="headertitle">Header Title: </label> <input type="text" name="headerTitle">
-        <label for="sitename">Site Name: </label> <input type="text" name="sitename">
-        <label for="slogan">Slogan: </label> <input type="text" name="slogan">
+        <label for="url">URL der Seite: <?php print($_SERVER['SERVER_NAME'] . '/' . $_SERVER['REQUEST_URI'] . '/')?></label> <input type="text" name="url">
+        <label for="Title">Title Tag der Seite: </label> <input type="text" name="title">
+        <label for="meta_description">Meta Description: </label> <input type="text" name="meta_description">
         <label for="h1">H1 Title: </label> <input type="text" name="h1">
         <!--<label for="htmltext">Inhalt: </label> <input type="text" name="htmltext">-->
             <textarea name="htmltext" id="htmltext" rows="10" cols="80">
@@ -49,6 +47,9 @@ include 'partial/header.php';
                 // instance, using default configuration.
                 CKEDITOR.replace( 'htmltext' );
             </script>
+        <label for="menu_link_title">Menu Link Title: </label> <input type="text" name="menu_link_title">
+        <input type="checkbox" name="menu_link_main_menu" value="false"> in Main Menu
+        <input type="checkbox" name="menu_link_footer_menu" value="false"> in Footer Menu
         <br><input class="button" type="submit" name="submit" value="Inhalt erstellen">
     </form>
 </div>
