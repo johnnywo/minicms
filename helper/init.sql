@@ -7,19 +7,21 @@ CREATE TABLE language
 );
 CREATE TABLE page
 (
-    idpage INT(11) PRIMARY KEY NOT NULL,
+    idpage INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     pagename VARCHAR(45)
 );
 CREATE TABLE page_has_language
 (
     page_idpage INT(11) NOT NULL,
     language_idlanguage INT(11) NOT NULL,
-    pl_pagetitle VARCHAR(45),
-    pl_headertitle VARCHAR(45),
-    pl_sitename VARCHAR(45),
-    pl_slogan VARCHAR(45),
+    pl_title VARCHAR(45),
+    pl_meta_description VARCHAR(255),
+    pl_url VARCHAR(55),
     pl_h1 VARCHAR(45),
     pl_htmltext TEXT,
+    pl_menu_link_title VARCHAR(55),
+    pl_menu_link_main_menu TINYINT(1) DEFAULT '0',
+    pl_menu_link_footer_menu TINYINT(1) DEFAULT '0',
     CONSTRAINT `PRIMARY` PRIMARY KEY (page_idpage, language_idlanguage),
     CONSTRAINT fk_content_has_language_content FOREIGN KEY (page_idpage) REFERENCES page (idpage),
     CONSTRAINT fk_content_has_language_language1 FOREIGN KEY (language_idlanguage) REFERENCES language (idlanguage)

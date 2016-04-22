@@ -23,24 +23,28 @@ class Content
         $this->db = $db_con;
     }
 
-    public function addContent()
+    public function addContent($pageName, $language, $url, $title, $metaDescription, $h1, $htmlText, $menuLinkTitle, $menuLinkTitleMainMenu, $menuLinkTitleFooterMenu )
     {
         try
         {
-            $stmt1 = $this->db->prepare('INSERT INTO page (pagename) VALUES (:pagename)');
-            $stmt2 = $this->db->prepare('INSERT INTO page_has_language 
-                                        (language_idlanguage, pl_headertitle, pl_sitename, pl_slogan, pl_h1, pl_htmltext) VALUES
-                                        (:lang, :pagetitle, :headertitle, :sitename, :slogan, :h1, :htmltext)');
-            $stmt1->bindParam(':pagename', $pageName);
-            $stmt2->bindParam(':lang', $language);
-            $stmt2->bindParam(':pagetitle', $pageTitle);
-            $stmt2->bindParam(':headertitle', $headerTitle);
-            $stmt2->bindParam(':sitename', $siteName);
-            $stmt2->bindParam(':slogan', $slogan);
-            $stmt2->bindParam(':h1', $h1);
-            $stmt2->bindParam(':htmltext', $htmlText);
-            $stmt1->execute();
-            $stmt2->execute();
+            $stmt = $this->db->prepare('INSERT INTO page (pagename) VALUES(:pagename);
+                                         SET @last_id := (SELECT LAST_INSERT_ID());
+                                         INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_title, pl_meta_description, pl_url, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) 
+                                         VALUES(@last_id, :lang, :url, :title, :meta_description, :h1, :htmltext, :menu_link_title, :menu_link_title_main_menu, :menu_link_title_footer_menu);
+                                         ');
+                                      
+            $stmt->bindParam(':pagename', $pageName);
+            $stmt->bindParam(':lang', $language);
+            $stmt->bindParam(':url', $url);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':meta_description', $metaDescription);
+            $stmt->bindParam(':h1', $h1);
+            $stmt->bindParam(':htmltext', $htmlText);
+            $stmt->bindParam(':menu_link_title', $menuLinkTitle);
+            $stmt->bindParam(':menu_link_title_main_menu', $menuLinkTitleMainMenu);
+            $stmt->bindParam(':menu_link_title_footer_menu', $menuLinkTitleFooterMenu);
+
+            $stmt->execute();
             return true;
 
         }
@@ -49,10 +53,21 @@ class Content
             $e->getMessage();
         }
     }
+    
+    
 
     public function getContent()
     {
         
+    }
+
+    public function toAscii($str)
+    {
+        $clean = preg_replace("/[^a-zA-Z0-9/_|+ -]/", '', $str);
+        $clean = strtolower(trim($clean, '-'));
+        $clean = preg_replace("/[/_|+ -]+/", '-', $clean);
+
+        return $clean;     
     }
     
     

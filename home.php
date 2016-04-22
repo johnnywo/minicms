@@ -48,8 +48,8 @@ include 'partial/header.php';
                 CKEDITOR.replace( 'htmltext' );
             </script>
         <label for="menu_link_title">Menu Link Title: </label> <input type="text" name="menu_link_title">
-        <input type="checkbox" name="menu_link_main_menu" value="false"> in Main Menu
-        <input type="checkbox" name="menu_link_footer_menu" value="false"> in Footer Menu
+        <input type="checkbox" name="menu_link_main_menu" value="true"> in Main Menu
+        <input type="checkbox" name="menu_link_footer_menu" value="true"> in Footer Menu
         <br><input class="button" type="submit" name="submit" value="Inhalt erstellen">
     </form>
 </div>

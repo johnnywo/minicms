@@ -13,14 +13,24 @@ if(isset($_POST['submit']))
     var_dump($_POST);
     $language = $_SESSION['user_language'];
     
-    $pageName = filter_input(INPUT_POST, 'pagename');
-    $pageTitle = filter_input(INPUT_POST, 'pagetitle');
-    $headerTitle = filter_input(INPUT_POST, 'headertitle');
-    $siteName = filter_input(INPUT_POST, 'sitename');
-    $slogan = filter_input(INPUT_POST, 'slogan');
+    $url = filter_input(INPUT_POST, 'url');
+    $url_clean = $content->toAscii($url); 
+    $title = filter_input(INPUT_POST, 'title');
+    $meta_description = filter_input(INPUT_POST, 'meta_description');
     $h1 = filter_input(INPUT_POST, 'h1');
     $htmlText = filter_input(INPUT_POST, 'htmltext');
-
-    $content->addContent();
+    $menu_link_title = filter_input(INPUT_POST, 'menu_link_title');
+    if(isset($_POST['menu_link_main_menu']) || ($_POST['menu_link_footer_menu']))
+        if ($_POST['menu_link_main_menu'] == TRUE)
+            $menu_link_main_menu = TRUE;
+        elseif ($_POST['menu_link_footer_menu'] == TRUE) {
+            $menu_link_footer_menu = TRUE;
+            $menu_link_main_menu = FALSE;
+            }
+        else
+            $menu_link_main_menu = FALSE;
+            $menu_link_footer_menu = FALSE;
+    $content->addContent($title, $language, $url, $title, $meta_description, $h1, $htmlText, $menu_link_title, $menu_link_main_menu, $menu_link_footer_menu);
 }
+
 
