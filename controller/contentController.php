@@ -14,23 +14,24 @@ if(isset($_POST['submit']))
     $language = $_SESSION['user_language'];
     
     $url = filter_input(INPUT_POST, 'url');
-    $url_clean = $content->toAscii($url); 
+    $url_clean = $content->slugify($url);
     $title = filter_input(INPUT_POST, 'title');
     $meta_description = filter_input(INPUT_POST, 'meta_description');
     $h1 = filter_input(INPUT_POST, 'h1');
     $htmlText = filter_input(INPUT_POST, 'htmltext');
     $menu_link_title = filter_input(INPUT_POST, 'menu_link_title');
-    if(isset($_POST['menu_link_main_menu']) || ($_POST['menu_link_footer_menu']))
-        if ($_POST['menu_link_main_menu'] == TRUE)
-            $menu_link_main_menu = TRUE;
-        elseif ($_POST['menu_link_footer_menu'] == TRUE) {
-            $menu_link_footer_menu = TRUE;
-            $menu_link_main_menu = FALSE;
-            }
-        else
-            $menu_link_main_menu = FALSE;
-            $menu_link_footer_menu = FALSE;
-    $content->addContent($title, $language, $url, $title, $meta_description, $h1, $htmlText, $menu_link_title, $menu_link_main_menu, $menu_link_footer_menu);
+    $menu_link_main_menu = false;
+    $menu_link_footer_menu = false;
+
+
+    if(isset($_POST['menu_link_main_menu']))
+        $menu_link_main_menu = TRUE;
+    
+    if(isset($_POST['menu_link_footer_menu']))
+        $menu_link_footer_menu = TRUE;
+
+
+    $content->addContent($title, $language, $url_clean, $title, $meta_description, $h1, $htmlText, $menu_link_title, $menu_link_main_menu, $menu_link_footer_menu);
 }
 
 

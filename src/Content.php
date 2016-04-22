@@ -29,7 +29,7 @@ class Content
         {
             $stmt = $this->db->prepare('INSERT INTO page (pagename) VALUES(:pagename);
                                          SET @last_id := (SELECT LAST_INSERT_ID());
-                                         INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_title, pl_meta_description, pl_url, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) 
+                                         INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_url, pl_title, pl_meta_description, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) 
                                          VALUES(@last_id, :lang, :url, :title, :meta_description, :h1, :htmltext, :menu_link_title, :menu_link_title_main_menu, :menu_link_title_footer_menu);
                                          ');
                                       
@@ -61,13 +61,34 @@ class Content
         
     }
 
-    public function toAscii($str)
-    {
-        $clean = preg_replace("/[^a-zA-Z0-9/_|+ -]/", '', $str);
-        $clean = strtolower(trim($clean, '-'));
-        $clean = preg_replace("/[/_|+ -]+/", '-', $clean);
+    // stackoverflow.com/questions/2955251/php-function-to-make-slug-url-string
 
-        return $clean;     
+    public function slugify($text)
+    {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+
+        // transliterate
+        $text = iconv('utf-8', 'ISO-8859-1//TRANSLIT', $text);
+
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        // trim
+        $text = trim($text, '-');
+
+        // remove duplicate -
+        $text = preg_replace('~-+~', '-', $text);
+
+        // lowercase
+        $text = strtolower($text);
+
+        if (empty($text))
+        {
+            return 'n-a';
+        }
+
+        return $text;
     }
     
     
