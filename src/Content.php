@@ -61,6 +61,26 @@ class Content
         
     }
 
+    public function getMainMenu($lang)
+    {
+        $stmt = $this->db->prepare('SELECT page_idpage, pl_menu_link_title FROM page_has_language
+                                    WHERE pl_menu_link_main_menu = 1 AND language_idlanguage = (:lang)');
+        $stmt->bindParam(':lang', $lang);
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if($stmt->rowCount() > 0)
+        {
+
+            $html = print('<ul class="menu">');
+            foreach ($result as $index => $item) {
+                //var_dump($result);
+                $html .= print('<li><a href="home.php?id=' . $item['page_idpage'] . '">' . $item['pl_menu_link_title'] . '</a></li>');
+            }
+            $html .= print('</ul>');
+        }
+    }
+
     // stackoverflow.com/questions/2955251/php-function-to-make-slug-url-string
 
     public function slugify($text)

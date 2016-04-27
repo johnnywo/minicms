@@ -19,3 +19,4 @@
     <script src="vendor/ckeditor/ckeditor/ckeditor.js"></script>
 </head>
 <body>
+// Datenbankabfrage Language, Content ID, Main Menu Link

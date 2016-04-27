@@ -1,3 +1,2 @@
-INSERT INTO page (pagename) VALUES('test');
-SET @last_id := (SELECT LAST_INSERT_ID());
-INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_title, pl_meta_description, pl_url, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) VALUES(@last_id, "2", "Test Title", "Test Meta Description", "Test URL", "Test H1", "Text HTML Text", "Test Menu Link Title", TRUE , FALSE );
+SELECT page_idpage, pl_menu_link_title FROM page_has_language
+WHERE pl_menu_link_main_menu = TRUE AND language_idlanguage = (1)
