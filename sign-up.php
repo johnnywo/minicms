@@ -10,7 +10,7 @@ require_once 'dbconfig.php';
 
 /*if($user->is_loggedin());
 {
-    $user->redirect('home.php');
+    $user->redirect('addContent.php');
 }*/
 
 if(isset($_POST['sign-up']))

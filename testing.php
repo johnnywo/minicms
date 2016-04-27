@@ -9,6 +9,6 @@
 require_once 'dbconfig.php';
 include_once 'partial/header.php';
 
-$content->getMainMenu(1);
+$content->getMainMenu(2);
 
 include_once 'partial/footer.php';

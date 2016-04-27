@@ -12,5 +12,5 @@ if ($_GET['logout'] == true)
     $logout = $user->logout();
 }
 else {
-    header('Location: home.php');
+    header('Location: addContent.php');
 }

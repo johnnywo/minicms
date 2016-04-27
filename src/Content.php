@@ -17,6 +17,58 @@ class Content
      * @var \PDO
      */
     private $db;
+
+    private $title;
+    private $metaDescription;
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * @param mixed $metaDescription
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHtmlContent()
+    {
+        return $this->htmlContent;
+    }
+
+    /**
+     * @param mixed $htmlContent
+     */
+    public function setHtmlContent($htmlContent)
+    {
+        $this->htmlContent = $htmlContent;
+    }
+    private $htmlContent;
     
     function __construct($db_con)
     {
@@ -56,28 +108,52 @@ class Content
     
     
 
-    public function getContent()
+    public function getContent($id, $lang)
     {
-        
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM page_has_language
+                                    WHERE page_idpage = (:id) AND language_idlanguage = (:lang)');
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':lang', $lang);
+            $stmt->execute();
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+            var_dump($result);
+
+            if ($stmt->rowCount() > 0) {
+                
+                $this->setTitle($result['pl_title']);
+                $this->setHtmlContent($result['pl_htmltext']);
+                
+            }
+        }
+        catch (\Exception $e)
+        {
+            $e->getMessage();
+        }
     }
 
     public function getMainMenu($lang)
     {
-        $stmt = $this->db->prepare('SELECT page_idpage, pl_menu_link_title FROM page_has_language
+        try {
+            $stmt = $this->db->prepare('SELECT page_idpage, pl_menu_link_title FROM page_has_language
                                     WHERE pl_menu_link_main_menu = 1 AND language_idlanguage = (:lang)');
-        $stmt->bindParam(':lang', $lang);
-        $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $stmt->bindParam(':lang', $lang);
+            $stmt->execute();
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        if($stmt->rowCount() > 0)
-        {
+            if ($stmt->rowCount() > 0) {
 
-            $html = print('<ul class="menu">');
-            foreach ($result as $index => $item) {
-                //var_dump($result);
-                $html .= print('<li><a href="home.php?id=' . $item['page_idpage'] . '">' . $item['pl_menu_link_title'] . '</a></li>');
+                $html = print('<ul class="menu">');
+                foreach ($result as $index => $item) {
+                    //var_dump($result);
+                    $html .= print('<li><a href="addContent.php?id=' . $item['page_idpage'] . '">' . $item['pl_menu_link_title'] . '</a></li>');
+                }
+                $html .= print('</ul>');
             }
-            $html .= print('</ul>');
+        }
+        catch (\Exception $e)
+        {
+            $e->getMessage();
         }
     }
 

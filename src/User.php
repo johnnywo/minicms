@@ -82,15 +82,21 @@ class User
     }
 
     
-    public function getLanguage()
+    public function getLanguage($user_id)
     {
         try
         {
-            $stmt = $this->db->prepare('SELECT * FROM language');
+/*            $stmt = $this->db->prepare('SELECT * FROM language');
             $stmt->execute();
             $langRow = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             //print_r($langRow);
-            return $langRow;
+            return $langRow;*/
+            $stmt = $this->db->prepare('SELECT * FROM users LEFT JOIN language ON 
+                          users.language_idlanguage=language.idlanguage WHERE user_id = :user_id');
+            $stmt->execute(array(':user_id' => $user_id));
+            $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $_SESSION['user_language'] = $userRow['idlanguage'];
         }
         catch (\PDOException $e)
         {
