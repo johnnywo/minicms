@@ -20,6 +20,42 @@ class Content
 
     private $title;
     private $metaDescription;
+    private $htmlContent;
+    private $url;
+    private $menuLinkTitle;
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenuLinkTitle()
+    {
+        return $this->menuLinkTitle;
+    }
+
+    /**
+     * @param mixed $menuLinkTitle
+     */
+    public function setMenuLinkTitle($menuLinkTitle)
+    {
+        $this->menuLinkTitle = $menuLinkTitle;
+    }
+
 
     /**
      * @return mixed
@@ -68,7 +104,6 @@ class Content
     {
         $this->htmlContent = $htmlContent;
     }
-    private $htmlContent;
     
     function __construct($db_con)
     {
@@ -123,6 +158,9 @@ class Content
                 
                 $this->setTitle($result['pl_title']);
                 $this->setHtmlContent($result['pl_htmltext']);
+                $this->setUrl($result['pl_url']);
+                $this->setMenuLinkTitle($result['pl_menu_link_title']);
+                $this->setMetaDescription($result['pl_meta_description']);
                 
             }
         }

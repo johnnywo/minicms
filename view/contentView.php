@@ -16,10 +16,11 @@ if(!isset($_GET['id']) || $_GET['id'] == ''){
     else
     {
         $id = $_GET['id'];
-        $lang = 2;//$user->getLanguage(2);
-        echo $lang;
+        $lang_default = 1;
+        if(isset($user->getLanguage($_SESSION['user_session'])) ? $user->getLanguage($_SESSION['user_session']) : $lang_default);
+        //echo $lang;
         $content->getContent($id, $lang);
-        print($content->getTitle());
+        print $content->getTitle();
         print $content->getHtmlContent();
     }
 
