@@ -113,7 +113,7 @@ include 'partial/header.php';
     <p>Sprache:</p>
 
     <?php
-    foreach ($user->getLanguage() as $index => $item) {
+    foreach ($user->getLanguageList() as $index => $item) {
         printf('<input type="radio" name="ulang" value="%d"> %s<br>', $item['idlanguage'], $item['language']);
     }
     ?>

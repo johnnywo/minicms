@@ -15,6 +15,7 @@ class User
      * @var \PDO
      */
     private $db;
+    
 
     function __construct($db_con)
     {
@@ -54,6 +55,7 @@ class User
                 if(password_verify($upass, $userRow['user_pass']))
                 {
                     $_SESSION['user_session'] = $userRow['user_id'];
+                    $_SESSION['user_name'] = $userRow['user_name'];
                     return true;
                 }
                 else
@@ -86,17 +88,30 @@ class User
     {
         try
         {
-/*            $stmt = $this->db->prepare('SELECT * FROM language');
-            $stmt->execute();
-            $langRow = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            //print_r($langRow);
-            return $langRow;*/
             $stmt = $this->db->prepare('SELECT * FROM users LEFT JOIN language ON 
                           users.language_idlanguage=language.idlanguage WHERE user_id = :user_id');
             $stmt->execute(array(':user_id' => $user_id));
             $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $_SESSION['user_language'] = $userRow['idlanguage'];
+            
+            
+
+        }
+        catch (\PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    
+    public function getLanguageList()
+    {
+        try{
+            $stmt = $this->db->prepare('SELECT * FROM language');
+            $stmt->execute();
+            $langRow = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            //print_r($langRow);
+            return $langRow;
         }
         catch (\PDOException $e)
         {

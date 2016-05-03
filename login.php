@@ -10,7 +10,7 @@ require_once 'dbconfig.php';
 
 if($user->is_loggedin() != '')
 {
-    $user->redirect('addContent.php');
+    $user->redirect('index.php');
 }
 
 if(isset($_POST['login']))

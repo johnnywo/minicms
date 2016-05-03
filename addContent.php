@@ -12,6 +12,7 @@ if(!$user->is_loggedin())
     $user->redirect('login.php');
 }
 $user_id = $_SESSION['user_session'];
+var_dump($user_id);
 
 $stmt = $db_con->prepare('SELECT * FROM users LEFT JOIN language ON 
                           users.language_idlanguage=language.idlanguage WHERE user_id = :user_id');

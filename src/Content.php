@@ -140,6 +140,34 @@ class Content
             $e->getMessage();
         }
     }
+
+    public function translateContent($id, $pageName, $language, $url, $title, $metaDescription, $h1, $htmlText, $menuLinkTitle, $menuLinkTitleMainMenu, $menuLinkTitleFooterMenu)
+    {
+        try
+        {
+            $stmt = $this->db->prepare('INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_url, pl_title, pl_meta_description, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) 
+                                        VALUES(:id, 2, :url, :title, :meta_description, :h1, :htmltext, :menu_link_title, :menu_link_title_main_menu, :menu_link_title_footer_menu);
+                                         ');
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':pagename', $pageName);
+            $stmt->bindParam(':lang', $language);
+            $stmt->bindParam(':url', $url);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':meta_description', $metaDescription);
+            $stmt->bindParam(':h1', $h1);
+            $stmt->bindParam(':htmltext', $htmlText);
+            $stmt->bindParam(':menu_link_title', $menuLinkTitle);
+            $stmt->bindParam(':menu_link_title_main_menu', $menuLinkTitleMainMenu);
+            $stmt->bindParam(':menu_link_title_footer_menu', $menuLinkTitleFooterMenu);
+
+            $stmt->execute();
+            return true;
+        }
+        catch (\Exception $e)
+        {
+            $e->getMessage();
+        }
+    }
     
     
 
@@ -152,7 +180,7 @@ class Content
             $stmt->bindParam(':lang', $lang);
             $stmt->execute();
             $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-            var_dump($result);
+            //var_dump($result);
 
             if ($stmt->rowCount() > 0) {
                 
@@ -161,10 +189,31 @@ class Content
                 $this->setUrl($result['pl_url']);
                 $this->setMenuLinkTitle($result['pl_menu_link_title']);
                 $this->setMetaDescription($result['pl_meta_description']);
+                return TRUE;
                 
             }
+            
         }
         catch (\Exception $e)
+        {
+            $e->getMessage();
+        }
+    }
+    
+    public function contentList($lang)
+    {
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM page_has_language WHERE language_idlanguage = (:lang)');
+            $stmt->bindParam(':lang', $lang);
+            $stmt->execute();
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            print('<table><thead><tr><th>Titel</th><th>Meta Desription</th><th>Menü</th></tr></thead>');
+            foreach ($result as $index => $item) {
+                printf('<tr><td>%s</td><td>%s</td><td>%s</td><td><a href="addContent">bearbeiten</a></td></tr>', $item['pl_title'], $item['pl_meta_description'], $item['pl_menu_link_title']);
+            }
+            print('</table>');
+        }
+        catch(\Exception $e)
         {
             $e->getMessage();
         }
@@ -184,9 +233,10 @@ class Content
                 $html = print('<ul class="menu">');
                 foreach ($result as $index => $item) {
                     //var_dump($result);
-                    $html .= print('<li><a href="addContent.php?id=' . $item['page_idpage'] . '">' . $item['pl_menu_link_title'] . '</a></li>');
+                    $html .= print('<li><a href="index.php?id=' . $item['page_idpage'] . '">' . $item['pl_menu_link_title'] . '</a></li>');
                 }
                 $html .= print('</ul>');
+                return TRUE;
             }
         }
         catch (\Exception $e)
@@ -224,6 +274,8 @@ class Content
 
         return $text;
     }
+    
+    
     
     
 }
