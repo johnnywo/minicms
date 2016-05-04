@@ -21,7 +21,7 @@ if(isset($_POST['login']))
 
     if($user->login($uname, $umail, $upass))
     {
-        $user->redirect('addContent.php');
+        $user->redirect('index.php');
     }
     else
     {

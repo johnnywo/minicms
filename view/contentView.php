@@ -7,7 +7,6 @@
  */
 
 // überprüfen, ob URL Parameter hat oder leer, falls leer Startseite anzeigen.
-
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 switch ($lang){
     case "de":
@@ -21,12 +20,18 @@ switch ($lang){
         break;
 }
 
+print('<div class="top-bar">');
+
 if($user->is_loggedin()) {
     $lang = intval($_SESSION['user_language']);
-    $user_name = printf('<span>Hallo %s!</span>', $_SESSION['user_name']);
+    $content->getMainMenu($lang);
+    printf('<div class="top-bar-right menu-text">Hallo %s!</div>', $_SESSION['user_name']);
+    $content::getUserMenu();
+} else{
+    $content->getMainMenu($lang);
 }
 
-$content->getMainMenu($lang);
+print('</div>');
 
 if(!isset($_GET['id']) || $_GET['id'] == ''){
     ?>
@@ -37,7 +42,7 @@ if(!isset($_GET['id']) || $_GET['id'] == ''){
 // sonst aus der ID und zugehörigen Sprache Inhalte ausgeben:
     else
     {
-        $id = $_GET['id'];
+        $id = intval($_GET['id']);
 
         //var_dump($lang);
         if($content->getContent($id, $lang) === null){
@@ -50,12 +55,13 @@ if(!isset($_GET['id']) || $_GET['id'] == ''){
         } else {
             $content->getContent($id, $lang);
         }
-        print('<h1>' . $content->getTitle() . '</h1>');
-        print $content->getHtmlContent();
+        print('<div class="row column text-center"><h1>' . $content->getTitle() . '</h1></div>');
+        print('<div class="row column">' . $content->getHtmlContent() . '</div>');
 
     }
 
 //printf(''$user->logout();
-$content->contentList(1);
+if(isset($_GET['edit']))
+    $content->contentList(1);
 
 ?>

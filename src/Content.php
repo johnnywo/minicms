@@ -207,7 +207,7 @@ class Content
             $stmt->bindParam(':lang', $lang);
             $stmt->execute();
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            print('<table><thead><tr><th>Titel</th><th>Meta Desription</th><th>Menü</th></tr></thead>');
+            print('<table><thead><tr><th>Titel</th><th>Meta Desription</th><th>Menü</th><th></th></tr></thead>');
             foreach ($result as $index => $item) {
                 printf('<tr><td>%s</td><td>%s</td><td>%s</td><td><a href="addContent">bearbeiten</a></td></tr>', $item['pl_title'], $item['pl_meta_description'], $item['pl_menu_link_title']);
             }
@@ -230,12 +230,12 @@ class Content
 
             if ($stmt->rowCount() > 0) {
 
-                $html = print('<ul class="menu">');
+                $html = print('<div class="top-bar-left"><ul class="menu">');
                 foreach ($result as $index => $item) {
                     //var_dump($result);
                     $html .= print('<li><a href="index.php?id=' . $item['page_idpage'] . '">' . $item['pl_menu_link_title'] . '</a></li>');
                 }
-                $html .= print('</ul>');
+                $html .= print('</ul></div>');
                 return TRUE;
             }
         }
@@ -243,6 +243,11 @@ class Content
         {
             $e->getMessage();
         }
+    }
+
+    public static function getUserMenu()
+    {
+        print('<ul class="dropdown menu" data-dropdown-menu><li><ul class="menu"><li><a href="addContent.php">Inhalt hinzufügen</a></li><li><a href="addContent.php">Inhalt bearbeiten</a></li></ul></li></ul> ');
     }
 
     // stackoverflow.com/questions/2955251/php-function-to-make-slug-url-string
