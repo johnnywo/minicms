@@ -247,7 +247,16 @@ class Content
 
     public static function getUserMenu()
     {
-        print('<ul class="dropdown menu" data-dropdown-menu><li><ul class="menu"><li><a href="addContent.php">Inhalt hinzufügen</a></li><li><a href="addContent.php">Inhalt bearbeiten</a></li></ul></li></ul> ');
+        print '<div class="top-bar-right"><ul class="dropdown menu" data-dropdown-menu>
+                    <li>
+                        <a>' . $_SESSION['user_name'] . '\'s Menü</a>
+                        <ul class="menu">
+                            <li><a href="addContent.php">Inhalt hinzufügen</a></li>
+                            <li><a href="addContent.php">Inhalt bearbeiten</a></li>
+                            <li><a href="logout.php?logout=true">abmelden</a></li>
+                        </ul>
+                    </li>
+               </ul></div>';
     }
 
     // stackoverflow.com/questions/2955251/php-function-to-make-slug-url-string

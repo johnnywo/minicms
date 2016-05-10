@@ -25,8 +25,10 @@ print('<div class="top-bar">');
 if($user->is_loggedin()) {
     $lang = intval($_SESSION['user_language']);
     $content->getMainMenu($lang);
-    printf('<div class="top-bar-right menu-text">Hallo %s!</div>', $_SESSION['user_name']);
     $content::getUserMenu();
+
+    printf('<div class="top-bar-right menu-text">Hallo %s!</div>', $_SESSION['user_name']);
+
 } else{
     $content->getMainMenu($lang);
 }
