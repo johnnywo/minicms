@@ -56,6 +56,7 @@ class User
                 {
                     $_SESSION['user_session'] = $userRow['user_id'];
                     $_SESSION['user_name'] = $userRow['user_name'];
+                    $_SESSION['user_language'] = $userRow['language_idlanguage'];
                     return true;
                 }
                 else

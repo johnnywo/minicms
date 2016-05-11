@@ -21,24 +21,25 @@ class Content
     private $title;
     private $metaDescription;
     private $htmlContent;
-    private $url;
     private $menuLinkTitle;
+    private $image;
 
     /**
      * @return mixed
      */
-    public function getUrl()
+    public function getImage()
     {
-        return $this->url;
+        return $this->image;
     }
 
     /**
-     * @param mixed $url
+     * @param mixed $image
      */
-    public function setUrl($url)
+    public function setImage($image)
     {
-        $this->url = $url;
+        $this->image = $image;
     }
+    
 
     /**
      * @return mixed
@@ -110,19 +111,18 @@ class Content
         $this->db = $db_con;
     }
 
-    public function addContent($pageName, $language, $url, $title, $metaDescription, $h1, $htmlText, $menuLinkTitle, $menuLinkTitleMainMenu, $menuLinkTitleFooterMenu )
+    public function addContent($pageName, $language, $title, $metaDescription, $h1, $htmlText, $menuLinkTitle, $menuLinkTitleMainMenu, $menuLinkTitleFooterMenu, $image_path )
     {
         try
         {
             $stmt = $this->db->prepare('INSERT INTO page (pagename) VALUES(:pagename);
                                          SET @last_id := (SELECT LAST_INSERT_ID());
-                                         INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_url, pl_title, pl_meta_description, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) 
-                                         VALUES(@last_id, :lang, :url, :title, :meta_description, :h1, :htmltext, :menu_link_title, :menu_link_title_main_menu, :menu_link_title_footer_menu);
+                                         INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_title, pl_meta_description, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu, pl_image) 
+                                         VALUES(@last_id, :lang, :title, :meta_description, :h1, :htmltext, :menu_link_title, :menu_link_title_main_menu, :menu_link_title_footer_menu, :image);
                                          ');
                                       
             $stmt->bindParam(':pagename', $pageName);
             $stmt->bindParam(':lang', $language);
-            $stmt->bindParam(':url', $url);
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':meta_description', $metaDescription);
             $stmt->bindParam(':h1', $h1);
@@ -130,6 +130,7 @@ class Content
             $stmt->bindParam(':menu_link_title', $menuLinkTitle);
             $stmt->bindParam(':menu_link_title_main_menu', $menuLinkTitleMainMenu);
             $stmt->bindParam(':menu_link_title_footer_menu', $menuLinkTitleFooterMenu);
+            $stmt->bindParam(':image', $image_path);
 
             $stmt->execute();
             return true;
@@ -141,17 +142,16 @@ class Content
         }
     }
 
-    public function translateContent($id, $pageName, $language, $url, $title, $metaDescription, $h1, $htmlText, $menuLinkTitle, $menuLinkTitleMainMenu, $menuLinkTitleFooterMenu)
+    public function translateContent($id, $pageName, $language, $title, $metaDescription, $h1, $htmlText, $menuLinkTitle, $menuLinkTitleMainMenu, $menuLinkTitleFooterMenu)
     {
         try
         {
-            $stmt = $this->db->prepare('INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_url, pl_title, pl_meta_description, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) 
-                                        VALUES(:id, 2, :url, :title, :meta_description, :h1, :htmltext, :menu_link_title, :menu_link_title_main_menu, :menu_link_title_footer_menu);
+            $stmt = $this->db->prepare('INSERT INTO page_has_language (page_idpage, language_idlanguage, pl_title, pl_meta_description, pl_h1, pl_htmltext, pl_menu_link_title, pl_menu_link_main_menu, pl_menu_link_footer_menu) 
+                                        VALUES(:id, 2, :title, :meta_description, :h1, :htmltext, :menu_link_title, :menu_link_title_main_menu, :menu_link_title_footer_menu);
                                          ');
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':pagename', $pageName);
             $stmt->bindParam(':lang', $language);
-            $stmt->bindParam(':url', $url);
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':meta_description', $metaDescription);
             $stmt->bindParam(':h1', $h1);
@@ -186,9 +186,14 @@ class Content
                 
                 $this->setTitle($result['pl_title']);
                 $this->setHtmlContent($result['pl_htmltext']);
-                $this->setUrl($result['pl_url']);
                 $this->setMenuLinkTitle($result['pl_menu_link_title']);
                 $this->setMetaDescription($result['pl_meta_description']);
+                if(!$result['pl_image'] == '') {
+                    $system_image_url = $result['pl_image'];
+                    $url_parts = explode('/', $system_image_url);
+                    $web_image_url = '/' . $url_parts[4] . '/' . $url_parts[5] . '/' . $url_parts[6] . '/' . $url_parts[7];
+                    $this->setImage($web_image_url);
+                }
                 return TRUE;
                 
             }
@@ -251,8 +256,8 @@ class Content
                     <li>
                         <a>' . $_SESSION['user_name'] . '\'s Menü</a>
                         <ul class="menu">
-                            <li><a href="addContent.php">Inhalt hinzufügen</a></li>
-                            <li><a href="addContent.php">Inhalt bearbeiten</a></li>
+                            <li><a href="?content=add">Inhalt hinzufügen</a></li>
+                            <li><a href="?content=add">Inhalt bearbeiten</a></li>
                             <li><a href="logout.php?logout=true">abmelden</a></li>
                         </ul>
                     </li>
@@ -261,7 +266,7 @@ class Content
 
     // stackoverflow.com/questions/2955251/php-function-to-make-slug-url-string
 
-    public function slugify($text)
+/*    public function slugify($text)
     {
         // replace non letter or digits by -
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -287,7 +292,7 @@ class Content
         }
 
         return $text;
-    }
+    }*/
     
     
     

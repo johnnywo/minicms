@@ -19,3 +19,5 @@ if(ENV === 'development') {
 } else {
     ini_set('display_errors', 'Off');
 }
+
+define('UPLOADIR', __DIR__ . '/upload/');

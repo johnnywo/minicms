@@ -37,7 +37,7 @@ print('</div>');
 
 if(!isset($_GET['id']) || $_GET['id'] == ''){
     ?>
-    <h1>Willkommen auf der Startseite</h1>
+    <h1>Willkommen auf der Startseite</h1> // is_frontpage()
 <?php
     }
 
@@ -57,6 +57,8 @@ if(!isset($_GET['id']) || $_GET['id'] == ''){
         } else {
             $content->getContent($id, $lang);
         }
+
+        print('<header id="header" class="header"><img src="' . $content->getImage() . '"/></header>');
         print('<div class="row column text-center"><h1>' . $content->getTitle() . '</h1></div>');
         print('<div class="row column">' . $content->getHtmlContent() . '</div>');
 
