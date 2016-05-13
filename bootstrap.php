@@ -8,13 +8,9 @@
 session_start();
 
 require_once(__DIR__ . '/config.php');
-
 require_once(__DIR__ . '/vendor/autoload.php');
 
-locale_set_default('de-AT.utf8');
-date_default_timezone_set('Europe/Berlin');
-
-set_error_handler(function ($errNum, $errStr)
+/*set_error_handler(function ($errNum, $errStr)
 {
     switch ($errNum) {
         case E_USER_ERROR:
@@ -26,6 +22,6 @@ set_error_handler(function ($errNum, $errStr)
             echo "Ich bin irgendein Fehler von CustomError: " . $errStr . "<br>";
             break;
     }
-});
+});*/
 
 

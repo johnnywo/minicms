@@ -191,7 +191,7 @@ class Content
                 if(!$result['pl_image'] == '') {
                     $system_image_url = $result['pl_image'];
                     $url_parts = explode('/', $system_image_url);
-                    $web_image_url = '/' . $url_parts[4] . '/' . $url_parts[5] . '/' . $url_parts[6] . '/' . $url_parts[7];
+                    $web_image_url = '/' . $url_parts[7] . '/' . $url_parts[8];
                     $this->setImage($web_image_url);
                 }
                 return TRUE;
@@ -235,7 +235,7 @@ class Content
 
             if ($stmt->rowCount() > 0) {
 
-                $html = print('<div class="top-bar-left"><ul class="menu">');
+                $html = print('<div class="top-bar-left"><ul class="menu"><li><a href="/index.php">Home</a></li>');
                 foreach ($result as $index => $item) {
                     //var_dump($result);
                     $html .= print('<li><a href="index.php?id=' . $item['page_idpage'] . '">' . $item['pl_menu_link_title'] . '</a></li>');
@@ -256,8 +256,8 @@ class Content
                     <li>
                         <a>' . $_SESSION['user_name'] . '\'s Menü</a>
                         <ul class="menu">
-                            <li><a href="?content=add">Inhalt hinzufügen</a></li>
-                            <li><a href="?content=add">Inhalt bearbeiten</a></li>
+                            <li><a href="index.php/add/content">Inhalt hinzufügen</a></li>
+                            <li><a href="index.php/edit/content">Inhalt bearbeiten</a></li>
                             <li><a href="logout.php?logout=true">abmelden</a></li>
                         </ul>
                     </li>

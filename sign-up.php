@@ -73,11 +73,10 @@ if(isset($_POST['sign-up']))
         }
     }
 }
-
-include 'partial/header.php';
+// @todo include $_GET['sign-up'] === true to switch function index.php
 ?>
 
-<form method="post">
+<form method="post" action="index.php?sign-up=true">
     <h2>Neues Benutzerkonto registrieren.</h2>
     <?php
     if(isset($error))
@@ -124,7 +123,4 @@ include 'partial/header.php';
     <label>Hast du bereits einen Account? <a href="login.php">einloggen</a></label>
 </form>
 
-<?php
-include 'partial/footer.php';
-?>
 
